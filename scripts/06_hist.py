@@ -28,14 +28,32 @@ def plot_histogram(group_col, df):
   fig.suptitle(f'Histogramas de {labels["out_sim"]} por {labels[group_col]}')
   fig.tight_layout()
 
-  plt.show()
-  # plt.savefig(f'figures/hist_{group_col}.png')
-  # plt.close(fig)
+  # plt.show()
+  plt.savefig(f'figures/hist_{group_col}.png')
+  plt.close(fig)
+
+
+def plot_out_sim(df):
+  fig, axes = plt.subplots(1, 1, figsize=(3*MAX_COLS, 6))
+
+  data = df['out_sim']
+  sns.histplot(data, bins=20, kde=False, ax=axes, edgecolor=None)
+
+  axes.set_title(f'Histograma para {labels["out_sim"]} (independente de categorias)')
+  axes.set_xlabel(labels['out_sim'])
+  axes.set_ylabel('Frequência')
+
+  fig.tight_layout()
+
+  # plt.show()
+  plt.savefig(f'figures/hist_out_sim.png')
+  plt.close(fig)
 
 
 if __name__ == '__main__':
   df = load_data()
 
+  plot_out_sim(df)
   plot_histogram('in_sim', df)
   plot_histogram('model', df)
   plot_histogram('area', df)
