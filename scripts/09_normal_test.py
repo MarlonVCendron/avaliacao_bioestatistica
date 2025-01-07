@@ -1,10 +1,5 @@
 from load_data import load_data
-from labels import labels
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 import scipy.stats as stats
-import numpy as np
 
 # pd.set_option('display.max_rows', None, 'display.max_columns', None)
 
