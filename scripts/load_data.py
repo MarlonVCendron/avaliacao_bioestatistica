@@ -10,4 +10,9 @@ def load_data(path=DATA_PATH):
   df['model'] = df['model'].astype('category')
   df['area'] = df['area'].astype('category')
 
+  # Remove in_sim 0 e 1
+  df = df.loc[~df['in_sim'].isin([0, 1])]
+  df['in_sim'] = df['in_sim'].cat.remove_unused_categories()
+
+
   return df
