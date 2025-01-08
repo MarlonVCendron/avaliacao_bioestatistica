@@ -21,8 +21,8 @@ def test_kstest(data):
 
 if __name__ == '__main__':
   df = load_data()
-  # normality_results = df.groupby(['model', 'area', 'in_sim'])['out_sim'].apply(test_normality)
   normality_results = df.groupby(['model', 'area', 'in_sim'])['out_sim'].apply(test_shapiro)
+  # normality_results = test_shapiro(df['out_sim'])
   print("Teste de Normalidade (Shapiro-Wilk):")
   print(normality_results)
   # print(kstest_results)
