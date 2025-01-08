@@ -1,6 +1,9 @@
 import pandas as pd
 
-DATA_PATH = 'dados/dados.csv'
+humano = 'marlon'
+
+DATA_PATH = 'dados/dados.csv' if humano == 'marlon' else r'C:\Users\pcost\Desktop\biostat\dados.csv'
+
 
 def load_data(filter_outliers=True, path=DATA_PATH):
   df = pd.read_csv(path)
@@ -17,3 +20,11 @@ def load_data(filter_outliers=True, path=DATA_PATH):
 
 
   return df
+
+if __name__ == '__main__': 
+  df = load_data()
+  stats = df.groupby(['area', 'model'])['out_sim'].agg(['mean', 'std', 'min', 'max', 'median', 'count'])
+  stats = stats.reset_index()
+  output = pd.DataFrame (stats)
+  output.to_csv(r'C:\Users\pcost\Desktop\biostat\descritivas.csv', index=False)
+
