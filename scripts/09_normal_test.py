@@ -11,7 +11,7 @@ import numpy as np
 
 def test_shapiro(data):
   stat, p = stats.shapiro(data)
-  return p>0.05
+  return p
 
 
 def test_kstest(data):
@@ -21,9 +21,9 @@ def test_kstest(data):
 
 if __name__ == '__main__':
   df = load_data()
-  normality_results = df.groupby(['model', 'area', 'in_sim'])['out_sim'].apply(test_shapiro)
-  # normality_results = test_shapiro(df['out_sim'])
+  # normality_results = df.groupby(['model', 'area'])['out_sim'].apply(test_shapiro)
+  normality_results = test_shapiro(df['out_sim'])
   print("Teste de Normalidade (Shapiro-Wilk):")
   print(normality_results)
   # print(kstest_results)
-  print(f'Total normais: {normality_results.sum()}')
+  # print(f'Total normais: {normality_results.sum()}')
