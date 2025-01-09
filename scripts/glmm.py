@@ -1,22 +1,58 @@
+from labels import labels
 import pandas as pd
 from load_data import load_data
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from pymer4.models import Lmer
+from rpy2.robjects import r
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+from rpy2.robjects import Formula
+import rpy2.robjects as ro
+
+pandas2ri.activate()
+lme4 = importr('lme4')
+glmmTMB = importr('glmmTMB')
 
 
-def glmm(df):
-  # model = Lmer("out_sim ~ in_sim + area * model + (1|trial)", data=df, family="inverse_gaussian")
-  model = Lmer("out_sim ~ area * model + in_sim + (1|trial)", data=df, family="gamma")
+def glm(df):
+  formula = "out_sim ~ area * model + in_sim + (1|trial)"
+  # model = Lmer("out_sim ~ area * model + in_sim + (1|trial)", data=df, family="gaussian")
+  # model = Lmer("out_sim ~ area * model + in_sim + (1|trial)", data=df, family="gamma")
+  model = lme4.glmer(
+      formula,
+      data=df,
+      family=r.Gamma(link="inverse")
+  )
   model.fit()
   print(model.summary())
   return model
 
 
+def r_glmm(df):
+  r_df = pandas2ri.py2rpy(df)
+
+  formula = Formula("out_sim ~ area * model + in_sim + (1|trial)")
+
+  model = glmmTMB.glmmTMB(
+      formula,
+      data=r_df,
+      family=r['beta_family']()
+  )
+
+  print(r['summary'](model))
+  return model
+
+
+def predict_with_model(model, df):
+  r_df_new = pandas2ri.py2rpy(df)
+  return r.predict(model, newdata=r_df_new, type="response")
+
+
 def plot_predicted_vs_observed(df, model):
-  # Predict the values based on the model
-  df['predicted'] = model.predict(df, skip_data_checks=True, verify_predictions=False)
+  # df['predicted'] = model.predict(df, skip_data_checks=True, verify_predictions=False)
+  df['predicted'] = predict_with_model(model, df)
 
   # Plot the observed vs predicted values
   plt.figure(figsize=(8, 6))
@@ -57,7 +93,8 @@ def plot_random_effects(model):
 
 
 def residuals_plot(df, model):
-  df['predicted'] = model.predict(df, skip_data_checks=True, verify_predictions=False)
+  # df['predicted'] = model.predict(df, skip_data_checks=True, verify_predictions=False)
+  df['predicted'] = predict_with_model(model, df)
   df['residuals'] = df['out_sim'] - df['predicted']
 
   # Plotting residuals
@@ -72,11 +109,11 @@ def residuals_plot(df, model):
 if __name__ == '__main__':
   df = load_data()
 
-  model = glmm(df)
+  model = r_glmm(df)
 
   # plot(model)
   # plot_random_effects(model)
 
   # plot_predicted_vs_observed(df, model)
   # residuals_plot(df, model)
-  # interaction_plot(df)
+  interaction_plot(df)

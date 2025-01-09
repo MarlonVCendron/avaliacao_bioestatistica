@@ -1,0 +1,23 @@
+     AIC      BIC   logLik deviance df.resid 
+ -1165.5  -1126.9    591.7  -1183.5      531 
+
+Random effects:
+
+Conditional model:
+ Groups Name        Variance  Std.Dev. 
+ trial  (Intercept) 1.056e-10 1.027e-05
+Number of obs: 540, groups:  trial, 10
+
+Dispersion parameter for beta family (): 15.7 
+
+Conditional model:
+                Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     -1.53056    0.07621 -20.083  < 2e-16 ***
+areadg          -0.32680    0.07262  -4.500  6.8e-06 ***
+modelng         -1.64778    0.08777 -18.773  < 2e-16 ***
+modelngt        -2.12128    0.09530 -22.258  < 2e-16 ***
+in_sim           2.69305    0.10943  24.609  < 2e-16 ***
+areadg:modelng   0.20831    0.12429   1.676   0.0937 .  
+areadg:modelngt  0.25070    0.13228   1.895   0.0581 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

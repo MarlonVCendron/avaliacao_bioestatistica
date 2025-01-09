@@ -10,9 +10,9 @@ def load_data(filter_outliers=True, path=DATA_PATH):
   df['out_sim'] = df['out_sim'].astype(float)
   # df['in_sim'] = df['in_sim'].astype(float)
   df['in_sim'] = df['in_sim'].astype(float)
-  df['model'] = df['model'].astype('category')
-  df['area'] = df['area'].astype('category')
-  df['trial'] = df['trial'].astype('category')
+  df['model'] = df['model'].astype('string')
+  df['area'] = df['area'].astype('string')
+  df['trial'] = df['trial'].astype('string')
 
   # Remove in_sim 0 e 1
   if filter_outliers:

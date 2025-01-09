@@ -1,0 +1,48 @@
+boundary (singular) fit: see help('isSingular') 
+
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: out_sim~area*model+in_sim+(1|trial)
+
+Family: gamma	 Inference: parametric
+
+Number of observations: 540	 Groups: {'trial': 10.0}
+
+Log-likelihood: 611.206 	 AIC: -1204.412
+
+Random effects:
+
+                 Name    Var    Std
+trial     (Intercept)  0.000  0.000
+Residual               0.196  0.443
+
+No random effect correlations specified
+
+Fixed effects:
+
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: out_sim~area*model+in_sim+(1|trial)
+
+Family: gamma	 Inference: parametric
+
+Number of observations: 540	 Groups: {'trial': 10.0}
+
+Log-likelihood: 611.206 	 AIC: -1204.412
+
+Random effects:
+
+                 Name    Var    Std
+trial     (Intercept)  0.000  0.000
+Residual               0.196  0.443
+
+No random effect correlations specified
+
+Fixed effects:
+
+                 Estimate  2.5_ci  97.5_ci     SE  T-stat  P-val  Sig
+(Intercept)         6.536   5.894    7.177  0.327  19.965  0.000  ***
+areadg              0.209  -0.103    0.520  0.159   1.314  0.189     
+modelng             3.761   3.013    4.510  0.382   9.848  0.000  ***
+modelngt            6.949   5.842    8.056  0.565  12.302  0.000  ***
+in_sim             -6.367  -7.134   -5.601  0.391 -16.280  0.000  ***
+areadg:modelng      0.284  -0.806    1.374  0.556   0.510  0.610     
+areadg:modelngt     1.088  -0.571    2.746  0.846   1.285  0.199     
