@@ -57,12 +57,14 @@ def plot_predicted_vs_observed(df, model):
   # Plot the observed vs predicted values
   plt.figure(figsize=(8, 6))
   plt.scatter(df['out_sim'], df['predicted'], alpha=0.5)
-  plt.plot([0, 1], [0, 1], '--', color='r', label='Perfect fit')  # Ideal 1:1 line
-  plt.xlabel('Observed out_sim')
-  plt.ylabel('Predicted out_sim')
-  plt.title('Observed vs Predicted out_sim')
+  plt.plot([0, 1], [0, 1], '--', color='r', label='Previsto = Observado')
+  plt.xlabel(f'{labels['out_sim']} observada')
+  plt.ylabel(f'{labels['out_sim']} prevista')
+  plt.title('Valores Observados vs Previstos')
   plt.legend()
-  plt.show()
+  # plt.show()
+  plt.savefig(f'figures/plot_predicted_vs_observed.png')
+  plt.close()
 
 
 def plot(model):
@@ -72,11 +74,16 @@ def plot(model):
 
 
 def interaction_plot(df):
-  # Plotting the interaction between 'area', 'model', and 'in_sim'
   plt.figure(figsize=(10, 6))
-  sns.lmplot(x='in_sim', y='out_sim', hue='area', col='model', data=df, logistic=True)
-  plt.title('Interaction between Area and Model on out_sim')
-  plt.show()
+  g = sns.lmplot(x='in_sim', y='out_sim', hue='area', col='model', data=df, logistic=True)
+  for ax in g.axes.flatten():
+    ax.set_xlabel(labels['in_sim'])
+    ax.set_ylabel(labels['out_sim'])
+  g._legend.set_title(labels['area'])
+  g.set_titles(f'{labels['model']}: {{col_name}}')
+  # plt.show()
+  plt.savefig(f'figures/plot_legal.png')
+  plt.close()
 
 
 def plot_random_effects(model):
@@ -100,10 +107,12 @@ def residuals_plot(df, model):
   # Plotting residuals
   plt.figure(figsize=(8, 6))
   sns.residplot(x=df['predicted'], y=df['residuals'], lowess=True, line_kws={'color': 'red'})
-  plt.title('Residuals Plot')
-  plt.xlabel('Predicted Values')
-  plt.ylabel('Residuals')
-  plt.show()
+  plt.title('Resíduos vs Valores Previstos')
+  plt.xlabel('Valores Previstos')
+  plt.ylabel('Resíduos')
+  # plt.show()
+  plt.savefig(f'figures/plot_residuals.png')
+  plt.close()
 
 
 if __name__ == '__main__':
@@ -114,6 +123,6 @@ if __name__ == '__main__':
   # plot(model)
   # plot_random_effects(model)
 
-  # plot_predicted_vs_observed(df, model)
-  # residuals_plot(df, model)
-  interaction_plot(df)
+  plot_predicted_vs_observed(df, model)
+  residuals_plot(df, model)
+  # interaction_plot(df)
