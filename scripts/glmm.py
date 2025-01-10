@@ -17,7 +17,7 @@ glmmTMB = importr('glmmTMB')
 
 
 def glm(df):
-  formula = "out_sim ~ area * model + in_sim + (1|trial)"
+  formula = "out_sim ~ area * model * in_sim + (1|trial)"
   # model = Lmer("out_sim ~ area * model + in_sim + (1|trial)", data=df, family="gaussian")
   # model = Lmer("out_sim ~ area * model + in_sim + (1|trial)", data=df, family="gamma")
   model = lme4.glmer(
@@ -33,7 +33,7 @@ def glm(df):
 def r_glmm(df):
   r_df = pandas2ri.py2rpy(df)
 
-  formula = Formula("out_sim ~ area * model + in_sim + (1|trial)")
+  formula = Formula("out_sim ~ area * model * in_sim + (1|trial)")
 
   model = glmmTMB.glmmTMB(
       formula,
@@ -81,9 +81,9 @@ def interaction_plot(df):
     ax.set_ylabel(labels['out_sim'])
   g._legend.set_title(labels['area'])
   g.set_titles(f'{labels['model']}: {{col_name}}')
-  # plt.show()
-  plt.savefig(f'figures/plot_legal.png')
-  plt.close()
+  plt.show()
+  # plt.savefig(f'figures/plot_legal.png')
+  # plt.close()
 
 
 def plot_random_effects(model):

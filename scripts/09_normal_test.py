@@ -14,16 +14,16 @@ def test_shapiro(data):
   return p
 
 
-def test_kstest(data):
+def test_kolmogorov_smirnov(data):
   stat, p = stats.kstest(data, 'norm')
   return p
 
 
 if __name__ == '__main__':
   df = load_data()
-  # normality_results = df.groupby(['model', 'area'])['out_sim'].apply(test_shapiro)
-  normality_results = test_shapiro(df['out_sim'])
-  print("Teste de Normalidade (Shapiro-Wilk):")
+  # normality_results = df.groupby(['model', 'in_sim', 'area'])['out_sim'].apply(test_kolmogorov_smirnov)
+  normality_results = test_kolmogorov_smirnov(df['out_sim'])
+  print("Teste de Normalidade:")
   print(normality_results)
   # print(kstest_results)
   # print(f'Total normais: {normality_results.sum()}')
